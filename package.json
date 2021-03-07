@@ -2,15 +2,38 @@
   "name": "icream",
   "version": "1.0.0",
   "description": "致力于搭建简洁的koa开发框架",
-  "main": "icream.js",
+  "main": "main.js",
   "dependencies": {
     "@koa/router": "^10.0.0",
-    "koa": "^2.13.1"
+    "koa": "^2.13.1",
+    "koa-body": "^4.2.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-static": "^5.0.0",
+    "lodash": "^4.17.21",
+    "module-alias": "^2.2.2",
+    "require-directory": "^2.1.1"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --inspect-brk",
+    "serve": "supervisor main.js"
   },
   "author": "terence",
-  "license": "ISC"
+  "license": "ISC",
+  "_moduleAliases": {
+    "@root": ".",
+    "@lib": "lib",
+    "@model": "app/model",
+    "@service": "app/service",
+    "@validate": "middlewares/Validate",
+    "@core": "core",
+    "@httpException": "core/HttpException",
+    "@config": "config",
+    "@middlewares": "middlewares",
+    "@static": "static"
+  },
+  "_moduleDirectories": [
+    "node_modules_custom"
+  ]
 }

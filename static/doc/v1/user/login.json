@@ -1,0 +1,40 @@
+{
+  "url": "/login",
+  "method": "post",
+  "title": "登录接口",
+  "params": {
+    "account": {
+      "trim": true,
+      "label": "账号",
+      "required": true,
+      "type": "String",
+      "length": [10, 20]
+    },
+    "password": {
+      "label": "密码",
+      "required": true,
+      "type": "String",
+      "length": [10, 20]
+    },
+    "type": {
+      "label": "登录终端类型 1 => 电脑pc端  2 => 手机短  3 => 微信端",
+      "required": true,
+      "type": "Number",
+      "enum": [1, 2, 3]
+    }
+  },
+  "ret": {
+    "name": {
+      "label": "用户姓名",
+      "type": "String"
+    },
+    "age": {
+      "label": "用户年龄",
+      "type": "Number"
+    },
+    "sex": {
+      "label": "用户性别",
+      "type": "Number"
+    }
+  }
+}
