@@ -146,8 +146,11 @@ class Validate {
       return this.successResult()
     },
     is_trim: (realParams, dummykey, ruleValue) => {
-      if (ruleValue) {
-        realParams[dummykey] = realParams[dummykey].trim()
+      const r = realParams[dummykey]
+      if (r) {
+        if (ruleValue) {
+          realParams[dummykey] = realParams[dummykey].trim()
+        }
       }
       return this.successResult()
     }
