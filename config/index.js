@@ -1,6 +1,9 @@
+
+const Enum = require('@enum')
+
 const config = {
   // prod
-  environment:'dev',
+  environment: Enum.environment.dev,
   database:{
     dbName:'7yue',
     host:'localhost',

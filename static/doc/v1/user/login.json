@@ -6,6 +6,7 @@
     "account": {
       "trim": true,
       "label": "账号",
+      "required": true,
       "type": "String",
       "length": [10, 20]
     },

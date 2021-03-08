@@ -13,10 +13,7 @@ const router = new Router({
 router.post('/login', async (ctx) => {
   const params = ctx.request.body
   // const result = UserService.getUserName()
-
-  const result = await new Validate().init(ctx)
-
-  console.log('result', result)
+  await new Validate().init(ctx)
 
   success(params)
 })

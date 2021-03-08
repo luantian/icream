@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
-const { NotFound, DevParameterException, ToolException } = require('@core/HttpException')
+const { NotFound, DevParameterException, ParameterException, ToolException } = require('@core/HttpException')
+const Enum = require('../enum')
 
 class Validate {
 
@@ -22,13 +23,12 @@ class Validate {
     this.start(apiDoc, ctx)
 
     if (this.result.length) {
-      throw new DevParameterException(this.result)
+      if (global.config.environment === Enum.environment.dev) {
+        throw new DevParameterException(this.result)
+      } else {
+        throw new ParameterException()
+      }
     }
-
-    console.log('ctx.request.body', ctx.request.body)
-
-    return 333;
-
   }
 
   start (apiDoc, ctx) {
@@ -66,8 +66,9 @@ class Validate {
       try {
         result = this.checkFunc[`is_${ruleKey}`](realParams, dummykey, ruleValue)
       } catch (error) {
-        throw new ToolException(ruleKey)
+        throw new ToolException(`参数: ${dummykey}，${ruleKey}字段有错误，请联系管理员`)
       }
+
       if (!result.isPass) {
         this.result.push(result.msg)
       }
@@ -116,14 +117,14 @@ class Validate {
     is_required: (realParams, dummykey, ruleValue) => {
       if (ruleValue) 
         if (!realParams.hasOwnProperty(dummykey)) 
-          return this.failResult(`${dummykey}: 必传参数`)
+          return this.failResult(`${dummykey}: 缺少必传参数`)
       return this.successResult()
     },
     is_type: (realParams, dummykey, ruleValue) => {
       const r = realParams[dummykey]
       if (r) {
         if (`[object ${ruleValue}]` !== Object.prototype.toString.call(r)) 
-        return this.failResult(`${dummykey}: 类型错误`)
+          return this.failResult(`${dummykey}: 类型错误`)
       }
       return this.successResult()
     },
@@ -148,9 +149,8 @@ class Validate {
     is_trim: (realParams, dummykey, ruleValue) => {
       const r = realParams[dummykey]
       if (r) {
-        if (ruleValue) {
+        if (ruleValue)
           realParams[dummykey] = realParams[dummykey].trim()
-        }
       }
       return this.successResult()
     }

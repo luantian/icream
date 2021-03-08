@@ -24,6 +24,7 @@
   "_moduleAliases": {
     "@root": ".",
     "@lib": "lib",
+    "@enum": "enum",
     "@model": "app/model",
     "@service": "app/service",
     "@validate": "middlewares/Validate",
