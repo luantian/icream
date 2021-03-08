@@ -1,0 +1,38 @@
+{
+  "url": "/login",
+  "method": "post",
+  "title": "登录接口",
+  "params": {
+    "account": {
+      "trim": true,
+      "label": "账号",
+      "required": true,
+      "type": "String",
+      "length": [10, 32]
+    },
+    "password": {
+      "label": "密码",
+      "required": true,
+      "type": "String",
+      "length": [10, 32]
+    },
+    "repassword": {
+      "label": "确认密码",
+      "required": true,
+      "type": "String",
+      "length": [10, 32]
+    },
+    "email": {
+      "label": "邮箱",
+      "required": true,
+      "type": "String",
+      "length": [6, 32]
+    },
+    "nickname": {
+      "label": "昵称",
+      "type": "String",
+      "length": [2, 100]
+    }
+  },
+  "ret": {}
+}

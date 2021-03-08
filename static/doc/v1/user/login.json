@@ -24,17 +24,8 @@
     }
   },
   "ret": {
-    "name": {
-      "label": "用户姓名",
-      "type": "String"
-    },
-    "age": {
-      "label": "用户年龄",
-      "type": "Number"
-    },
-    "sex": {
-      "label": "用户性别",
-      "type": "Number"
-    }
+    "name": "用户姓名",
+    "age": "用户年龄",
+    "sex": "用户性别"
   }
 }

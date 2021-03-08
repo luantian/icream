@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const { NotFound, DevParameterException, ParameterException, ToolException } = require('@core/HttpException')
-const Enum = require('../enum')
+const Enum = require('@enum')
 
 class Validate {
 
@@ -29,6 +29,8 @@ class Validate {
         throw new ParameterException()
       }
     }
+
+    return apiDoc.ret
   }
 
   start (apiDoc, ctx) {
@@ -42,6 +44,7 @@ class Validate {
       const oRule = dummyParams[dummykey]
       this.singleCheck(realParams, dummykey, oRule)
     })
+
   }
 
   /**
@@ -51,14 +54,13 @@ class Validate {
    * @param {*} oRule 需要验证的所有规则
    */
   singleCheck(realParams, dummykey, oRule) {
-    
-    const ruleKeys = this.filterKey(Object.keys(oRule))
-
     // console.log('当前需要验证的字段: ' + dummykey)
     // console.log('需要验证的规则: ' + ruleKeys)
     // console.log('dummykey', dummykey)
     // console.log('oRule', oRule)
     // console.log('ruleKeys', ruleKeys)
+
+    const ruleKeys = this.filterKey(Object.keys(oRule))
 
     ruleKeys.map((ruleKey) => {
       const ruleValue = oRule[ruleKey]
