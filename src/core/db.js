@@ -14,14 +14,20 @@ const sequelize = new Sequelize(name, user, password, {
     paranoid: true,
     createdAt: 'createTime',
     updatedAt: 'updateTime',
-    deleteAt: 'deleteTime',
+    deletedAt: 'deleteTime',
     underscored: true
+  },
+  pool: {
+    maxIdleTime: 5000
   }
 })
 
-sequelize.sync({
-  force: false
-})
+sequelize.sync(
+  {
+    force: false
+  }
+)
+
 
 module.exports = {
   sequelize

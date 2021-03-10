@@ -1,6 +1,7 @@
+const bcrypt = require('bcryptjs')
 const { sequelize } = require('@core/db')
-
 const { Sequelize, Model, DataTypes } = require('sequelize')
+
 
 class User extends Model {
   
@@ -13,7 +14,14 @@ User.init({
     primaryKey: true
   },
   account: Sequelize.STRING(32),
-  password: Sequelize.STRING(32),
+  password: {
+    type: Sequelize.STRING(60),
+    set(val) {
+      const salt = bcrypt.genSaltSync(10)
+      const psw = bcrypt.hashSync(val, salt)
+      this.setDataValue('password', psw)
+    }
+  },
   phone: Sequelize.STRING(11),
   email: {
     type: Sequelize.STRING(32),

@@ -1,4 +1,4 @@
-const { Success } = require("@core/HttpException")
+const { Success } = require("@httpException")
 
 const success = (result = {}, retVo = {}) => {
 

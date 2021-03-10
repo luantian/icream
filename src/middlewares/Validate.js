@@ -1,21 +1,26 @@
 const fs = require('fs')
 const path = require('path')
-const { NotFound, DevParameterException, ParameterException, ToolException } = require('@core/HttpException')
-const Enum = require('@enum')
+const {
+  NotFound,
+  DevParameterException,
+  ParameterException,
+  ToolException
+} = require('@httpException')
+const Enum = require('@utils/Enum')
 const util = require('@utils/util')
 
 class Validate {
 
   constructor () {
     this.result = []
-    this.ApiDocPath = path.resolve(__dirname, '../static/doc')
+    this.ApiDocPath = path.resolve(__dirname, '../../static/doc')
   }
 
   async init(ctx) {
     const fileName = this.ApiDocPath + ctx.url + '.json'
     const { apiDoc, error } = await this.getFileData(fileName)
     if (error) {
-      // 记录之日
+      // 记录日志
       throw new NotFound(10404)
     }
     const params = await this.start(apiDoc, ctx)
@@ -26,7 +31,7 @@ class Validate {
         throw new ParameterException()
       }
     }
-    return {params, retVo: apiDoc.ret}
+    return { params, retVo: apiDoc.ret }
   }
 
   async start (apiDoc, ctx) {
@@ -41,9 +46,12 @@ class Validate {
     // 需要额外验证的默认值，只要参数自动是这些，就默认进行验证
     const defaultKeys = ['email', 'phone']
     
+    // 过滤用户传过来的多余参数
     dummyParamsKeys.map((dummykey) => {
       const oRule = dummyParams[dummykey]
-      params[dummykey] = realParams[dummykey]
+      if (realParams[dummykey]) {
+        params[dummykey] = realParams[dummykey]
+      }
       if (defaultKeys.includes(dummykey)) {
         oRule[dummykey] = true
       }
@@ -130,18 +138,28 @@ class Validate {
     is_type: (realParams, dummykey, ruleValue) => {
       const r = realParams[dummykey]
       if (r) {
-        if (`[object ${ruleValue}]` !== Object.prototype.toString.call(r)) 
+        if (ruleValue !== util.decideType(r)) 
           return this.failResult(`${dummykey}: 类型错误`)
       }
       return this.successResult()
     },
-    is_length: (realParams, dummykey, ruleValue) => {
+    is_len: (realParams, dummykey, ruleValue) => {
       const r = realParams[dummykey]
-      const min = ruleValue[0]
-      const max = ruleValue[1]
       if (r) {
-        if ( r.length < min || r.length > max )
-          return this.failResult(`${dummykey}: 长度不在${min}和${max}之间`)
+        switch (util.decideType(ruleValue)) {
+          case 'Array':
+            const min = ruleValue[0]
+            const max = ruleValue[1]
+            if ( r.length < min || r.length > max )
+              return this.failResult(`${dummykey}: 长度不在${min}和${max}之间`)
+            break
+          case 'Number':
+            if ( r.length !== ruleValue )
+              return this.failResult(`${dummykey}: 长度不等于${ruleValue}`)
+            break
+          default:
+            return this.failResult(`${dummykey}: 接口的json文件 len 的值类型错误`)
+        }
       }
       return this.successResult()
     },

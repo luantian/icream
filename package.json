@@ -27,16 +27,16 @@
   "license": "ISC",
   "_moduleAliases": {
     "@root": ".",
-    "@lib": "src/lib",
-    "@enum": "src/enum",
-    "@model": "src/app/model",
-    "@service": "src/app/service",
-    "@validate": "src/middlewares/Validate",
-    "@core": "src/core",
-    "@httpException": "src/core/HttpException",
     "@config": "src/config",
+    "@core": "src/core",
+    "@exception": "src/exception",
+    "@lib": "src/lib",
     "@middlewares": "src/middlewares",
     "@static": "src/static",
+
+    "@httpException": "src/exception/HttpException",
+    "@model": "src/app/model",
+    "@service": "src/app/service",
     "@utils": "src/utils"
   },
   "_moduleDirectories": [

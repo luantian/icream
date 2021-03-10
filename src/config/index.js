@@ -1,5 +1,5 @@
 
-const Enum = require('@enum')
+const Enum = require('@utils/Enum')
 
 const config = {
   // prod

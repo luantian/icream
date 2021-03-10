@@ -2,7 +2,7 @@
 const codeMessage = require('@core/codeMessage')
 
 class HttpException extends Error {
-  constructor(params = {msg: '服务器异常', code: 10000, status: 400}) {
+  constructor(params = { msg: '服务器异常', code: 9999, status: 500 }) {
     super()
     this.code = params.code
     this.status = params.status
@@ -20,10 +20,10 @@ class DevParameterException extends HttpException {
 }
 
 class ParameterException extends HttpException {
-  constructor(code = 400) {
+  constructor(code = 400, msg = '') {
     super()
     this.status = 400
-    this.msg = codeMessage[code]
+    this.msg = msg || codeMessage[code]
     this.code = code
   }
 }
@@ -39,34 +39,34 @@ class Success extends HttpException {
 }
 
 class NotFound extends HttpException {
-  constructor(code = 404) {
+  constructor(code = 404, msg = '') {
     super()
     this.status = 404
-    this.msg = codeMessage[code]
+    this.msg = msg || codeMessage[code]
     this.code = code
   }
 }
 
 class AuthFailed extends HttpException {
-  constructor(code = 401) {
+  constructor(code = 401, msg = '') {
     super()
     this.status = 401
-    this.msg = codeMessage[code]
+    this.msg = msg || codeMessage[code]
     this.code = code
   }
 }
 
 class Forbbiden extends HttpException {
-  constructor(code = 403) {
+  constructor(code = 403, msg = '') {
     super()
     this.status = 403
-    this.msg = codeMessage[code]
+    this.msg = msg || codeMessage[code]
     this.code = code
   }
 }
 
 class ToolException extends HttpException {
-  constructor(msg = '', code = 10500) {
+  constructor(code = 10500, msg = '') {
     super()
     this.status = 400
     this.msg = msg || codeMessage[code]
@@ -75,7 +75,7 @@ class ToolException extends HttpException {
 }
 
 class ExistException extends HttpException {
-  constructor(msg = '', code = 11001) {
+  constructor(code = 11001, msg = '') {
     super()
     this.status = 400
     this.msg = msg || codeMessage[code]
