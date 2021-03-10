@@ -14,21 +14,14 @@ class UserService {
 
     if (params.password !== params.repassword) throw new ParameterException(11000)
 
-    const { account, email } = params
+    const { account, email, phone } = params
 
-    const userCount = await User.count({where: { account }})
-    let emailCount = 0
-    if (email) emailCount = await User.count({where: { email }})
-
-    if (userCount) throw new ExistException(11001)
-    if (emailCount) throw new ExistException(11002)
-
-    console.log('emailCount', emailCount)
-
-    console.log('resultresultresult', userCount)
-
+    let user = null
+    if (account) user = await User.findOne({where: { account }})
+    if (email && !user) user = await User.findOne({where: { email }})
+    if (phone && !user) user = await User.findOne({where: { phone }})
+    if (user) throw new ExistException(11004)
     await User.create(params)
-
   }
 }
 

@@ -30,7 +30,7 @@
     "email": {
       "label": "邮箱",
       "type": "String",
-      "len": [6, 32]
+      "len": [6, 100]
     },
     "nickname": {
       "label": "昵称",

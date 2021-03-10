@@ -3,6 +3,9 @@ const { BaseError } = require('sequelize')
 
 const Enum = require('@utils/Enum')
 
+const { logger } = require('@core/logger');
+
+
 // 判断错误类型
 const decideErrorType = (error ) => {
   let errorType = ''
@@ -39,20 +42,11 @@ const forceOrSuccess = (ctx, error) => {
   ctx.status = error.status
 }
 
-// 数据库级别异常返回结果
-const dbException = (ctx, status = 500) => {
-  ctx.body = {
-    code: 9999,
-    msg: '数据库级别异常，请联系管理员'
-  }
-  ctx.status = status
-}
-
 // 系统级异常返回结果
 const sysException = (ctx, status = 500) => {
   ctx.body = {
     code: 9999,
-    msg: '服务器异常，未知错误，请记录操作，反馈管理员'
+    msg: '服务器异常，请稍后重试'
   }
   ctx.status = status
 }
@@ -64,6 +58,7 @@ const catchError = async (ctx, next) => {
     await next()
   } catch (error) {
 
+
     let errorType = decideErrorType(error)
 
     if (decideEnvironment(errorType)) throw error
@@ -72,12 +67,11 @@ const catchError = async (ctx, next) => {
       case Enum.error.Http:
         forceOrSuccess(ctx, error)
         break
-      case Enum.error.Sequelize:
-        dbException(ctx)
-        break
       default:
         sysException(ctx)
+        logger.error(error)
     }
+
   }
 }
 

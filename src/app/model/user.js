@@ -13,7 +13,10 @@ User.init({
     defaultValue: Sequelize.UUIDV4, // 或 Sequelize.UUIDV1
     primaryKey: true
   },
-  account: Sequelize.STRING(32),
+  account: {
+    type: Sequelize.STRING(32),
+    unique: true
+  },
   password: {
     type: Sequelize.STRING(60),
     set(val) {
@@ -22,7 +25,10 @@ User.init({
       this.setDataValue('password', psw)
     }
   },
-  phone: Sequelize.STRING(11),
+  phone: {
+    type: Sequelize.STRING(11),
+    unique: true
+  },
   email: {
     type: Sequelize.STRING(32),
     unique: true

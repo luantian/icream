@@ -13,6 +13,8 @@ app.use(catchError)
 app.use(koaBody())
 app.use(static(path.join(__dirname, './src/static')))
 
+
 InitManager.init(app)
+
 
 app.listen(3000);
