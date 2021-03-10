@@ -10,7 +10,7 @@ class HttpException extends Error {
   }
 }
 
-class DevParameterException  extends HttpException {
+class DevParameterException extends HttpException {
   constructor(data) {
     super()
     this.status = this.code = 400
@@ -74,13 +74,16 @@ class ToolException extends HttpException {
   }
 }
 
+class ExistException extends HttpException {
+  constructor(msg = '', code = 11001) {
+    super()
+    this.status = 400
+    this.msg = msg || codeMessage[code]
+    this.code = code
+  }
+}
+
 module.exports = {
-  HttpException,
-  DevParameterException,
-  ParameterException,
-  Success,
-  NotFound,
-  AuthFailed,
-  Forbbiden,
-  ToolException
+  HttpException, DevParameterException, ParameterException, Success, NotFound,
+  AuthFailed, Forbbiden, ToolException, ExistException
 }

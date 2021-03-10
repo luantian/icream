@@ -1,14 +1,14 @@
 {
-  "url": "/login",
+  "url": "/registor",
   "method": "post",
-  "title": "登录接口",
+  "title": "注册接口",
   "params": {
     "account": {
-      "trim": true,
       "label": "账号",
       "required": true,
       "type": "String",
-      "length": [10, 32]
+      "length": [10, 32],
+      "trim": true
     },
     "password": {
       "label": "密码",
@@ -22,9 +22,13 @@
       "type": "String",
       "length": [10, 32]
     },
+    "phone": {
+      "label": "手机号码",
+      "type": "String",
+      "length": [11, 11]
+    },
     "email": {
       "label": "邮箱",
-      "required": true,
       "type": "String",
       "length": [6, 32]
     },

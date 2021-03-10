@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "@koa/router": "^10.0.0",
+    "bcryptjs": "^2.4.3",
     "koa": "^2.13.1",
     "koa-body": "^4.2.0",
     "koa-bodyparser": "^4.3.0",
@@ -13,7 +14,8 @@
     "module-alias": "^2.2.2",
     "mysql2": "^2.2.5",
     "require-directory": "^2.1.1",
-    "sequelize": "^6.5.0"
+    "sequelize": "^6.5.0",
+    "validator": "^13.5.2"
   },
   "devDependencies": {},
   "scripts": {
@@ -25,16 +27,17 @@
   "license": "ISC",
   "_moduleAliases": {
     "@root": ".",
-    "@lib": "lib",
-    "@enum": "enum",
-    "@model": "app/model",
-    "@service": "app/service",
-    "@validate": "middlewares/Validate",
-    "@core": "core",
-    "@httpException": "core/HttpException",
-    "@config": "config",
-    "@middlewares": "middlewares",
-    "@static": "static"
+    "@lib": "src/lib",
+    "@enum": "src/enum",
+    "@model": "src/app/model",
+    "@service": "src/app/service",
+    "@validate": "src/middlewares/Validate",
+    "@core": "src/core",
+    "@httpException": "src/core/HttpException",
+    "@config": "src/config",
+    "@middlewares": "src/middlewares",
+    "@static": "src/static",
+    "@utils": "src/utils"
   },
   "_moduleDirectories": [
     "node_modules_custom"

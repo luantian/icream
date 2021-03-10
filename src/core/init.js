@@ -1,6 +1,6 @@
 const requireDirectory = require('require-directory')
 const Router = require('@koa/router')
-const config = require(`${process.cwd()}/config`)
+const config = require('@config')
 
 class InitManager {
   static init(app) {
@@ -15,7 +15,7 @@ class InitManager {
 
   static initLoadRouters() {
     //path config
-    const apiDirectory = `${process.cwd()}/app/controller`
+    const apiDirectory = `${process.cwd()}/src/app/controller`
     requireDirectory(module, apiDirectory, {
       visit: (router) => {
         if(router instanceof Router ){

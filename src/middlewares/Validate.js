@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { NotFound, DevParameterException, ParameterException, ToolException } = require('@core/HttpException')
 const Enum = require('@enum')
+const util = require('@utils/util')
 
 class Validate {
 
@@ -12,16 +13,12 @@ class Validate {
 
   async init(ctx) {
     const fileName = this.ApiDocPath + ctx.url + '.json'
-
     const { apiDoc, error } = await this.getFileData(fileName)
-
     if (error) {
       // 记录之日
       throw new NotFound(10404)
     }
-
-    this.start(apiDoc, ctx)
-
+    const params = await this.start(apiDoc, ctx)
     if (this.result.length) {
       if (global.config.environment === Enum.environment.dev) {
         throw new DevParameterException(this.result)
@@ -29,22 +26,30 @@ class Validate {
         throw new ParameterException()
       }
     }
-
-    return apiDoc.ret
+    return {params, retVo: apiDoc.ret}
   }
 
-  start (apiDoc, ctx) {
+  async start (apiDoc, ctx) {
     // 实参
     const realParams = ctx.request.body
     // 形参 也就是需要验证的字段
     const dummyParams = apiDoc.params
+    let params = {}
     // 需要验证的字段
     const dummyParamsKeys = Object.keys(dummyParams)
+    
+    // 需要额外验证的默认值，只要参数自动是这些，就默认进行验证
+    const defaultKeys = ['email', 'phone']
+    
     dummyParamsKeys.map((dummykey) => {
       const oRule = dummyParams[dummykey]
-      this.singleCheck(realParams, dummykey, oRule)
+      params[dummykey] = realParams[dummykey]
+      if (defaultKeys.includes(dummykey)) {
+        oRule[dummykey] = true
+      }
+      this.singleCheck(params, dummykey, oRule)
     })
-
+    return params
   }
 
   /**
@@ -68,7 +73,7 @@ class Validate {
       try {
         result = this.checkFunc[`is_${ruleKey}`](realParams, dummykey, ruleValue)
       } catch (error) {
-        throw new ToolException(`参数: ${dummykey}，${ruleKey}字段有错误，请联系管理员`)
+        throw new ToolException(`参数: ${dummykey}字段有错误，请联系管理员`)
       }
 
       if (!result.isPass) {
@@ -155,8 +160,25 @@ class Validate {
           realParams[dummykey] = realParams[dummykey].trim()
       }
       return this.successResult()
+    },
+    is_email: (realParams, dummykey, ruleValue) => {
+      const r = realParams[dummykey]
+      if (r) {
+        if (!util.isEmail(r))
+          return this.failResult(`${dummykey}: 邮箱不符合规则`)
+      }
+      return this.successResult()
+    },
+    is_phone: (realParams, dummykey, ruleValue) => {
+      const r = realParams[dummykey]
+      if (r) {
+        if (!util.isPhone(r))
+          return this.failResult(`${dummykey}: 手机号不符合规则`)
+      }
+      return this.successResult()
     }
   }
+
 }
 
 module.exports = Validate
