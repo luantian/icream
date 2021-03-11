@@ -90,8 +90,6 @@ class Validate {
       const ruleValue = oRule[ruleKey]
       let result 
       try {
-        console.log('ddddddddddddddddddddruleValue', ruleValue)
-        console.log('ruleKey', ruleKey)
         result = this.checkFunc[`is_${ruleKey}`](realParams, dummykey, ruleValue)
       } catch (error) {
         throw new ToolException(`参数: ${dummykey}字段有错误，请联系管理员`)
