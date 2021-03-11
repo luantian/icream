@@ -3,7 +3,7 @@ const { BaseError } = require('sequelize')
 
 const Enum = require('@utils/Enum')
 
-const { logger } = require('@core/logger');
+const { appLogger, httpLogger } = require('@core/logger');
 
 
 // 判断错误类型
@@ -65,13 +65,13 @@ const catchError = async (ctx, next) => {
 
     switch (errorType) {
       case Enum.error.Http:
+        httpLogger.warn(error)
         forceOrSuccess(ctx, error)
         break
       default:
+        appLogger.error(error)
         sysException(ctx)
-        logger.error(error)
     }
-
   }
 }
 

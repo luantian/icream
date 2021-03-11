@@ -34,11 +34,8 @@ class InitManager {
 
   // 终端输出启动内容 
   static outputShellLog() {
-    
     console.log(shellLogo1.value)
-
     console.log(version.color, ` :: Icream ::                 (v${version.value})\n`)
-
   }
 }
 
