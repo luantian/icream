@@ -36,7 +36,7 @@
     "@static": "src/static",
     "@httpException": "src/exception/HttpException",
     "@model": "src/app/model",
-    "@service": "src/app/service",
+    "@controller": "src/app/controller",
     "@utils": "src/utils",
     "@package": "package.json"
   },

@@ -1,0 +1,12 @@
+{
+  "url": "/delete",
+  "method": "DELETE",
+  "title": "删除用户接口",
+  "params": {
+    "id": {
+      "required": true,
+      "type": "String"
+    }
+  },
+  "ret": {}
+}

@@ -21,10 +21,10 @@ class InitManager {
   // 加载路由
   static initLoadRouters() {
     // 指定接口存放的路径
-    const apiDirectory = `${process.cwd()}/src/app/controller`
+    const apiDirectory = `${process.cwd()}/src/app/api`
     requireDirectory(module, apiDirectory, {
       visit: (router) => {
-        if(router instanceof Router ){
+        if(router instanceof Router ) {
           InitManager.app.use(router.routes())
           InitManager.app.use(router.allowedMethods())
         }

@@ -1,0 +1,17 @@
+{
+  "url": "/list",
+  "method": "POST",
+  "title": "获取用户列表",
+  "params": {
+    "page": {
+      "type": "Number"
+    },
+    "limit": {
+      "type": "Number"
+    }
+  },
+  "ret": {
+    "records": "保存用户信息的列表",
+    "total": "用户总条数"
+  }
+}

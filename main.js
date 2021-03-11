@@ -17,4 +17,4 @@ app.use(static(path.join(__dirname, './src/static')))
 InitManager.init(app)
 
 
-app.listen(5000);
+app.listen(3000);

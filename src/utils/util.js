@@ -1,9 +1,3 @@
-
-const decideType = (r) => {
-
-  return Object.prototype.toString.call(val)
-}
-
 const util = {
   isEmail(val) {
     const reg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
@@ -16,6 +10,7 @@ const util = {
   decideType(val) {
     return Object.prototype.toString.call(val).replace('[object ', '').replace(']', '')
   }
+
 }
 
 

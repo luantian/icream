@@ -1,0 +1,24 @@
+{
+  "url": "/test",
+  "method": "GET",
+  "title": "测试接口",
+  "params": {
+    "id": {
+      "required": true,
+      "type": "String",
+      "trim": true
+    },
+    "haha": {
+      "required": true,
+      "type": "String"
+    },
+    "dddd": {
+      "required": true,
+      "type": "String"
+    }
+  },
+  "ret": {
+    "id": "用户id",
+    "haha": "hah"
+  }
+}

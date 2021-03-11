@@ -3,11 +3,11 @@ const { sequelize } = require('@core/db')
 const { Sequelize, Model, DataTypes } = require('sequelize')
 
 
-class User extends Model {
+class UserModel extends Model {
   
 }
 
-User.init({
+UserModel.init({
   id: {
     type: DataTypes.UUID,
     defaultValue: Sequelize.UUIDV4, // 或 Sequelize.UUIDV1
@@ -37,4 +37,4 @@ User.init({
   
 }, { sequelize, tableName: 'user' })
 
-module.exports = { User }
+module.exports = { UserModel }

@@ -13,16 +13,16 @@ class Validate {
 
   constructor () {
     this.result = []
-    this.ApiDocPath = path.resolve(__dirname, '../../static/doc')
+    // this.ApiDocPath = path.resolve(__dirname, '../../static/doc')
   }
 
-  async init(ctx) {
-    const fileName = this.ApiDocPath + ctx.url + '.json'
-    const { apiDoc, error } = await this.getFileData(fileName)
-    if (error) {
-      // 记录日志
-      throw new NotFound(10404)
-    }
+  async init(ctx, apiDoc) {
+    // const fileName = this.ApiDocPath + ctx.url + '.json'
+    // const { apiDoc, error } = await this.getFileData(fileName)
+    // if (error) {
+    //   // 记录日志
+    //   throw new NotFound(10404)
+    // }
     const params = await this.start(apiDoc, ctx)
     if (this.result.length) {
       if (global.config.environment === Enum.environment.dev) {
@@ -34,9 +34,20 @@ class Validate {
     return { params, retVo: apiDoc.ret }
   }
 
+  conversParams(ctx) {
+    let query = JSON.parse(JSON.stringify(ctx.request.query)) || {}
+    let params = ctx.request.params || {}
+    let body = ctx.request.body || {}
+
+    return Object.assign(query, params, body)
+  }
+
   async start (apiDoc, ctx) {
     // 实参
-    const realParams = ctx.request.body
+    const realParams = this.conversParams(ctx)
+
+    // console.log('realParams', realParams)
+
     // 形参 也就是需要验证的字段
     const dummyParams = apiDoc.params
     let params = {}
@@ -79,6 +90,8 @@ class Validate {
       const ruleValue = oRule[ruleKey]
       let result 
       try {
+        console.log('ddddddddddddddddddddruleValue', ruleValue)
+        console.log('ruleKey', ruleKey)
         result = this.checkFunc[`is_${ruleKey}`](realParams, dummykey, ruleValue)
       } catch (error) {
         throw new ToolException(`参数: ${dummykey}字段有错误，请联系管理员`)
@@ -195,6 +208,7 @@ class Validate {
       }
       return this.successResult()
     }
+    
   }
 
 }
