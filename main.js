@@ -1,4 +1,5 @@
 require('module-alias/register')
+require('@babel/register')
 
 const Koa = require('koa')
 const path = require('path')

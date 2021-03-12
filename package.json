@@ -18,7 +18,12 @@
     "sequelize": "^6.5.0",
     "validator": "^13.5.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-decorators": "^7.13.5",
+    "@babel/register": "^7.13.8"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --inspect-brk",
@@ -38,7 +43,8 @@
     "@model": "src/app/model",
     "@controller": "src/app/controller",
     "@utils": "src/utils",
-    "@package": "package.json"
+    "@package": "package.json",
+    "@annotation": "src/app/annotation"
   },
   "_moduleDirectories": [
     "node_modules_custom"
