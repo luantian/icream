@@ -1,0 +1,11 @@
+{
+  "url": "/name",
+  "method": "GET",
+  "title": "获取图书名称",
+  "params": {
+    
+  },
+  "ret": {
+    "name": "图书名称"
+  }
+}

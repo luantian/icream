@@ -8,8 +8,8 @@ class InitManager {
   // 全局代码初始化
   static init(app) {
     InitManager.app = app
-    InitManager.initLoadRouters()
     InitManager.loadConfig()
+    InitManager.initLoadRouters()
     InitManager.outputShellLog()
   }
 
@@ -21,15 +21,13 @@ class InitManager {
   // 加载路由
   static initLoadRouters() {
     // 指定接口存放的路径
-    const apiDirectory = `${process.cwd()}/src/app/api`
-    requireDirectory(module, apiDirectory, {
-      visit: (router) => {
-        if(router instanceof Router ) {
-          InitManager.app.use(router.routes())
-          InitManager.app.use(router.allowedMethods())
-        }
-      }
-    })
+    const apiDirectory = `${process.cwd()}/src/app/controller`
+    requireDirectory(module, apiDirectory)
+  }
+
+  static loadRouter(router) {
+    InitManager.app.use(router.routes())
+    InitManager.app.use(router.allowedMethods())
   }
 
   // 终端输出启动内容 

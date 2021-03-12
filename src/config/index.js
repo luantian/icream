@@ -4,6 +4,7 @@ const Enum = require('@utils/Enum')
 const config = {
   // prod
   environment: Enum.environment.dev,
+  apiDocPath: '/static/doc',
   database: {
     name: 'icream',
     host: '127.0.0.1',

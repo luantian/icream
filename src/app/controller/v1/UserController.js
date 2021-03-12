@@ -1,10 +1,11 @@
 const { ParameterException, ExistException, NotFound } = require('@httpException')
 const { UserModel } = require('@model/user')
-const { Controller, Mapping } = require('@annotation/Controller')
+const { Controller, Mapping } = require('@annotation')
 
-
+@Controller('/v1/user')
 class UserController {
 
+  @Mapping
   static async login(params) {
     
     const { account } = params
@@ -16,6 +17,7 @@ class UserController {
 
   }
 
+  @Mapping
   static async registor(params) {
     /**
      * 1. 输入账号，密码，确认密码，邮箱，昵称
@@ -39,6 +41,7 @@ class UserController {
     await UserModel.create(params)
   }
 
+  @Mapping
   static async delete(params) {
     const { id } = params.id
 
@@ -48,6 +51,7 @@ class UserController {
 
   }
 
+  @Mapping
   static async list(params) {
 
     const { page = 1, limit = 3 } = params
@@ -65,7 +69,5 @@ class UserController {
   }
   
 }
-
-
 
 module.exports = { UserController }
