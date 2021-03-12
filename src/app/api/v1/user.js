@@ -17,7 +17,7 @@ requireDirectory(module, apiDirectory, {
 
     router[method](url, async (ctx) => {
       const { params, retVo } = await new Validate().init(ctx, apiDoc)
-      const data = await UserController[staticFuncName](params)
+      const data = await UserController[staticFuncName](params, ctx)
       success(data, retVo)
     })
 

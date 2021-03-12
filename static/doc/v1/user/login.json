@@ -1,6 +1,6 @@
 {
   "url": "/login",
-  "method": "post",
+  "method": "POST",
   "title": "登录接口",
   "params": {
     "account": {

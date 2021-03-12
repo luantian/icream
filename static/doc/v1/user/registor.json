@@ -1,6 +1,6 @@
 {
   "url": "/registor",
-  "method": "post",
+  "method": "POST",
   "title": "注册接口",
   "params": {
     "account": {

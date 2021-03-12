@@ -21,7 +21,7 @@ class UserController {
      * 4. 校验密码安全度(未做)
      * 5. 校验邮箱是否可用(未做)
      * 6. 校验账号是否存在
-     * 7. 密码加密(未做)
+     * 7. 密码加密(已完成)
      */
 
     if (params.password !== params.repassword) throw new ParameterException(11000)
@@ -37,7 +37,7 @@ class UserController {
   }
 
   static async delete(params) {
-    const id = params.id
+    const { id } = params.id
 
     const result = await UserModel.destroy({ where: { id } })
 
@@ -62,5 +62,7 @@ class UserController {
   }
   
 }
+
+
 
 module.exports = { UserController }
