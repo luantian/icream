@@ -1,9 +1,9 @@
 const bcrypt = require('bcryptjs')
 const { sequelize } = require('@core/db')
-const { Sequelize, Model, DataTypes } = require('sequelize')
+const { Sequelize, DataTypes } = require('sequelize')
+const { BaseModel } = require('@model/BaseModel')
 
-
-class UserModel extends Model {
+class UserModel extends BaseModel {
   
 }
 

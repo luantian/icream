@@ -4,7 +4,7 @@ const { Controller, Mapping } = require('@annotation')
 class BookController {
 
   @Mapping
-  static async name() {
+  static async getName() {
     return {
       name: 'bookName is hahaha'
     }

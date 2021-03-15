@@ -42,6 +42,7 @@
     "@httpException": "src/exception/HttpException",
     "@model": "src/app/model",
     "@controller": "src/app/controller",
+    "@service": "src/app/service",
     "@utils": "src/utils",
     "@package": "package.json",
     "@annotation": "src/app/annotation"

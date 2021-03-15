@@ -6,7 +6,7 @@ const { success } = require('@lib/success')
 
 class Annotation {
 
-  static prefix = '/'
+  static prefix = ''
 
   /**
    * 注册控制器的类
@@ -16,8 +16,8 @@ class Annotation {
    * @returns 
    */
   static Controller (prefix) {
-    Annotation.router = new Router({ prefix })
-    Annotation.prefix = prefix
+    Annotation.prefix = prefix || '/'
+    Annotation.router = new Router({ prefix: Annotation.prefix })
     return (target, key, description) => {
       return description
     }
@@ -31,20 +31,24 @@ class Annotation {
    * @returns 
    */
   static Mapping (target, key, description) {
+    // console.log('MappingTarget', target)
+    // console.log('MappingKey', key)
+    // console.log('MappingDescription', description)
+    // console.log('Annotation.prefixKey: ', Annotation.prefix + '/' + key)
 
     let apiDoc 
     try {
       apiDoc = Annotation.readFile(Annotation.prefix + '/' + key)
     } catch (error) {
-      throw error
+      throw new Error('未定义json接口文件或者在配置了Mapping注解的类上未配置Controller注解')
     }
 
     const url = apiDoc.url
     const method = apiDoc.method.toLowerCase()
 
-    Annotation.router[method](url, async (ctx) => {
+    Annotation.router[method](url, async (ctx, next) => {
       const { params, retVo } = await new Validate().init(ctx, apiDoc)
-      const data = await target[key](params, ctx)
+      const data = await target[key](params, ctx, next)
       success(data, retVo)
     })
 

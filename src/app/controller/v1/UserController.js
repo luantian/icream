@@ -1,9 +1,10 @@
 const { ParameterException, ExistException, NotFound } = require('@httpException')
-const { UserModel } = require('@model/user')
+const { UserModel } = require('@model/User')
 const { Controller, Mapping } = require('@annotation')
+const { BaseController } = require('@controller/BaseController')
 
 @Controller('/v1/user')
-class UserController {
+class UserController extends BaseController {
 
   @Mapping
   static async login(params) {
