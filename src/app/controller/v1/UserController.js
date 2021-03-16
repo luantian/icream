@@ -1,7 +1,8 @@
 const { ParameterException, ExistException, NotFound } = require('@httpException')
-const { UserModel } = require('@model/User')
+const { UserModel } = require('@model/UserModel')
 const { Controller, Mapping } = require('@annotation')
-const { BaseController } = require('@controller/BaseController')
+const { BaseController } = require('@controller/v1/BaseController')
+const Enum = require('@utils/Enum')
 
 @Controller('/v1/user')
 class UserController extends BaseController {

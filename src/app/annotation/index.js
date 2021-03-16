@@ -19,6 +19,12 @@ class Annotation {
     Annotation.prefix = prefix || '/'
     Annotation.router = new Router({ prefix: Annotation.prefix })
     return (target, key, description) => {
+      // Annotation.prefix = prefix
+      // let currentClassName = target.name
+      // let mustLastStr = 'Controller'
+      // if (clsName.indexOf(mustLastStr) > -1) {
+      //   currentClassName = currentClassName.replace(mustLastStr, '')
+      // }
       return description
     }
   }

@@ -1,7 +1,4 @@
-const fs = require('fs')
-const path = require('path')
 const {
-  NotFound,
   DevParameterException,
   ParameterException,
   ToolException
@@ -9,11 +6,23 @@ const {
 const Enum = require('@utils/Enum')
 const util = require('@utils/util')
 
+/**
+ * 使用方式:
+ * 1. 在json接口文件中配置
+ */
+
+/**
+ * 未做功能:
+ * 1. 验证数值大小的验证 ( 未添加 )
+ * 2. len只能作用于字符串 ( 未添加校验 )
+ * 3. 组合验证先后顺序是否有影响 ( 需要大量测试，未做 )
+ * 4. 返回值做了第一层级校验 ( 需要做多层级参数校验，为了方便开发者，可以引入其他json文件标记 )
+ */
+
 class Validate {
 
   constructor () {
     this.result = []
-    // this.ApiDocPath = path.resolve(__dirname, '../../static/doc')
   }
 
   /**
@@ -23,7 +32,6 @@ class Validate {
    * @returns 返回验证后或处理后的数据，和需要返回给前端的字段
    */
   async init(ctx, apiDoc) {
-    
     const params = await this.start(apiDoc, ctx)
     if (this.result.length) {
       if (global.config.environment === Enum.environment.dev) {
@@ -45,7 +53,6 @@ class Validate {
     let query = JSON.parse(JSON.stringify(ctx.request.query)) || {}
     let params = ctx.request.params || {}
     let body = ctx.request.body || {}
-
     return Object.assign(query, params, body)
   }
 
@@ -58,8 +65,6 @@ class Validate {
   async start (apiDoc, ctx) {
     // 实参
     const realParams = this.conversParams(ctx)
-
-    // console.log('realParams', realParams)
 
     // 形参 也就是需要验证的字段
     const dummyParams = apiDoc.params
