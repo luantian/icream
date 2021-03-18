@@ -5,7 +5,9 @@
   "main": "main.js",
   "dependencies": {
     "@koa/router": "^10.0.0",
+    "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.1",
     "koa-body": "^4.2.0",
     "koa-bodyparser": "^4.3.0",

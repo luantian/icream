@@ -2,22 +2,11 @@ const { ParameterException, ExistException, NotFound } = require('@httpException
 const { UserModel } = require('@model/UserModel')
 const { Controller, Mapping } = require('@annotation')
 const { BaseController } = require('@controller/v1/BaseController')
+const { Token } = require('@lib/token')
 const Enum = require('@utils/Enum')
 
 @Controller('/v1/user')
 class UserController extends BaseController {
-
-  @Mapping
-  static async login(params) {
-    
-    const { account } = params
-
-    const user = await UserModel.findOne({ where: { account } })
-    if (!user) throw new ExistException(11005)
-
-    return user
-
-  }
 
   @Mapping
   static async registor(params) {
@@ -32,9 +21,7 @@ class UserController extends BaseController {
      */
 
     if (params.password !== params.repassword) throw new ParameterException(11000)
-
     const { account, email, phone } = params
-
     let user = null
     if (account) user = await UserModel.findOne({where: { account }})
     if (email && !user) user = await UserModel.findOne({where: { email }})
@@ -44,22 +31,27 @@ class UserController extends BaseController {
   }
 
   @Mapping
+  static async login(params) {
+    const { account, password } = params
+    const user = await UserModel.verifyAccountPassword(account, password)
+    const { id, role = Enum.role.USER } = user
+    const oToken = new Token( { id, role } )
+    user.accessToken = oToken.generateAccess(id, role)
+    user.refreshToken = oToken.generateRefresh(id, role)
+    return user
+  }
+
+  @Mapping
   static async delete(params) {
     const { id } = params.id
-
     const result = await UserModel.destroy({ where: { id } })
-
     if (!result) throw new NotFound()
-
   }
 
   @Mapping
   static async list(params) {
-
     const { page = 1, limit = 3 } = params
-
     const { count, rows } = await UserModel.findAndCountAll({ offset: (page - 1) * limit, limit })
-
     return {
       records: rows,
       total: count

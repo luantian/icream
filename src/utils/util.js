@@ -10,9 +10,6 @@ const util = {
   decideType(val) {
     return Object.prototype.toString.call(val).replace('[object ', '').replace(']', '')
   }
-
 }
-
-
 
 module.exports = util

@@ -27,6 +27,8 @@
     "id": "用户id",
     "email": "用户邮箱",
     "phone": "用户手机",
-    "nickname": "用户昵称"
+    "nickname": "用户昵称",
+    "accessToken": "accessToken",
+    "refreshToken": "refreshToken"
   }
 }

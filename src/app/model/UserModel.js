@@ -1,10 +1,19 @@
 const bcrypt = require('bcryptjs')
+const { ParameterException } = require('@httpException')
 const { sequelize } = require('@core/db')
 const { Sequelize, DataTypes } = require('sequelize')
 const { BaseModel } = require('@model/BaseModel')
 
 class UserModel extends BaseModel {
-  
+  static async verifyAccountPassword(account, password) {
+    const user = await UserModel.findOne({ where: { account } })
+    if ( !user ) throw new ParameterException(11005)
+
+    const correct = bcrypt.compareSync( password, user.password )
+    if ( !correct ) throw new ParameterException(11006)
+
+    return user
+  }
 }
 
 UserModel.init({

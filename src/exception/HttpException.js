@@ -83,7 +83,16 @@ class ExistException extends HttpException {
   }
 }
 
+class TokenException extends HttpException {
+  constructor(code = 11007, msg = '') {
+    super()
+    this.status = 401
+    this.msg = msg || codeMessage[code]
+    this.code = code
+  }
+}
+
 module.exports = {
   HttpException, DevParameterException, ParameterException, Success, NotFound,
-  AuthFailed, Forbbiden, ToolException, ExistException
+  AuthFailed, Forbbiden, ToolException, ExistException, TokenException
 }
